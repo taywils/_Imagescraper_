@@ -1,0 +1,5 @@
+<% if defined?(@scrape_url) %>
+  <h3><%= @scrape_url %></h3>
+<% else %>
+  <h3>This is display.erb</h3>
+<% end %>

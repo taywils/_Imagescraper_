@@ -1,0 +1,22 @@
+require 'sinatra'
+require 'open-uri'
+require 'nokogiri'
+require 'openssl'
+
+# Root 
+get '/' do
+  erb :index
+end
+
+post '/' do
+  @scrape_url = params[:scrape_url]
+  # Run the scraper script here and then render the Builder html
+  erb :index
+end
+
+# Test that renders builder html within the webpage
+get '/test' do
+  @webpage = "http://en.wikipedia.org/wiki/Snake"
+  
+  erb :test
+end

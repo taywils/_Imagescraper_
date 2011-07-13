@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <title>ImageScrape Beta</title>
+  </head>
+  <body>
+    <form action="/" method="POST">
+      <input type="text" name="scrape_url"/><input type="submit" value="Scrape!"/>
+    </form>
+    <%= yield %>
+  </body>
+</html>

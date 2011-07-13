@@ -1,0 +1,48 @@
+<% 
+   require 'builder' 
+   require 'builder'
+   require 'open-uri'
+   require 'nokogiri'
+   require 'openssl'
+   require './tools' 
+%>
+
+<%
+  # The ssl verification handles https connections
+  document = Nokogiri::HTML(open(@webpage, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
+
+  # Use Builder to construct a new html document based 
+  # on the nokogiri 
+  html = Builder::XmlMarkup.new(:indent => 2)
+
+  # Creates a html document that displays x images per row
+  output = html.html{
+    html.head{
+      html.title "ImageScraper"
+    }
+    html.body{
+      html.a( {:href => @webpage}, "Images scrapped from #{@webpage}")
+      html.br
+      
+      PER_ROW = 5
+      query = document.css('img')
+
+      0.upto(query.size - 1) do |i|
+	result = query[i]
+
+	if(Tools.modify_src?(result))
+          result = Tools.modify_src(result, webpage)
+          html.img :src => result
+	else
+          html.text result
+	end
+
+	if(i % PER_ROW == 0 and i != 0)
+          html.br
+	end
+      end
+    }
+  }
+%>
+<%= output %>
+
