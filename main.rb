@@ -106,7 +106,7 @@ post '/' do
     elsif(src[0] == '.' and src[1] == '.')
       # Removes the parent directory reference
       # Example ../some_directory/somefile.xyz
-      # will result in /soome_directory/somefile.xyz
+      # will result in /some_directory/somefile.xyz
       src = src[2, src.length]
       slash_count = 0
       end_i = 0
