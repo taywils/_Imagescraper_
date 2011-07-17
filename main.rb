@@ -4,14 +4,7 @@ require 'nokogiri'
 require 'openssl'
 require 'builder'
 
-# Root 
-get '/' do
-  erb :index
-end
-
-# Test that renders builder html within the webpage
-post '/' do 
-  # I couldn't get modules to load properly
+helpers do 
   # Monkey patch to ensure that Builder will not auto escape xml text
   module Builder  
     class XmlBase  
@@ -136,9 +129,15 @@ post '/' do
 
       return trimmed_domain += src
     end
-  end
+  end  
+end
 
-  # If this test passes then just grab a new value for @webpage from params[:scrape_url]
+# Root 
+get '/' do
+  erb :index
+end
+
+post '/' do 
   @webpage = params[:scrape_url]
 
   # The ssl verification handles https connections
@@ -164,7 +163,7 @@ post '/' do
         result = query[i]
 
         if(modify_src?(result))
-          result = modify_src(result, webpage)
+          result = modify_src(result, @webpage)
           html.img :src => result
         else
           html.text result
