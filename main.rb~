@@ -4,14 +4,7 @@ require 'nokogiri'
 require 'openssl'
 require 'builder'
 
-# Root 
-get '/' do
-  erb :index
-end
-
-# Test that renders builder html within the webpage
-post '/' do 
-  # I couldn't get modules to load properly
+helpers do 
   # Monkey patch to ensure that Builder will not auto escape xml text
   module Builder  
     class XmlBase  
@@ -20,6 +13,14 @@ post '/' do
       end  
     end  
   end   
+  
+  def set_page(html_document)
+    @page = html_document
+  end
+
+  def get_page()
+    @page
+  end
 
   # Extracts the src attribute from an img tag
   def get_src(input)
@@ -106,7 +107,7 @@ post '/' do
     elsif(src[0] == '.' and src[1] == '.')
       # Removes the parent directory reference
       # Example ../some_directory/somefile.xyz
-      # will result in /soome_directory/somefile.xyz
+      # will result in /some_directory/somefile.xyz
       src = src[2, src.length]
       slash_count = 0
       end_i = 0
@@ -136,9 +137,15 @@ post '/' do
 
       return trimmed_domain += src
     end
-  end
+  end  
+end
 
-  # If this test passes then just grab a new value for @webpage from params[:scrape_url]
+# Homepage 
+get '/' do
+  erb :index
+end
+
+post '/' do 
   @webpage = params[:scrape_url]
 
   # The ssl verification handles https connections
@@ -148,7 +155,7 @@ post '/' do
   # on the nokogiri 
   html = Builder::XmlMarkup.new(:indent => 2)
 
-  # Creates a html document that displays x images per row
+  # Creates a html document that displays PER_ROW images per row
   @output = html.html{
     html.head{
       html.title "ImageScraper"
@@ -164,7 +171,7 @@ post '/' do
         result = query[i]
 
         if(modify_src?(result))
-          result = modify_src(result, webpage)
+          result = modify_src(result, @webpage)
           html.img :src => result
         else
           html.text result
@@ -176,6 +183,8 @@ post '/' do
       end
     }
   }
+  
+  set_page @output
 
-  erb :test
+  erb :images
 end

@@ -4,6 +4,12 @@ require 'nokogiri'
 require 'openssl'
 require 'builder'
 
+# TODO: Alternatively I could just try and store the output as a settting
+# http://www.sinatrarb.com/configuration.html
+# TODO: Go with the array approach where each output is stored within an outputs array
+# TODO: Within the images.erb just iterate over the outputs and display each one (in reverse order so the most recent
+# images are displayed first)
+
 helpers do 
   # Monkey patch to ensure that Builder will not auto escape xml text
   module Builder  
@@ -13,6 +19,14 @@ helpers do
       end  
     end  
   end   
+  
+  def set_page(html_document)
+    @page = html_document
+  end
+
+  def get_page()
+    return @page
+  end
 
   # Extracts the src attribute from an img tag
   def get_src(input)
@@ -130,9 +144,46 @@ helpers do
       return trimmed_domain += src
     end
   end  
+
+  def generate_page(webpage, document)
+    # Use Builder to construct a new html document based 
+    # on the nokogiri 
+    html = Builder::XmlMarkup.new(:indent => 2)
+
+    # Creates a html document that displays the desired number of images_per_row
+    output = html.html{
+      html.head{
+        html.title "ImageScraper"
+      }
+      html.body{
+        html.a( {:href => webpage}, "Images scrapped from #{webpage}")
+        html.br
+        
+        images_per_row = 5
+        query = document.css('img')
+
+        0.upto(query.size - 1) do |i|
+          result = query[i]
+
+          if(modify_src?(result))
+            result = modify_src(result, webpage)
+            html.img :src => result
+          else
+            html.text result
+          end
+
+          if(i % images_per_row == 0 and i != 0)
+            html.br
+          end
+        end
+      }
+    }
+
+    set_page output
+  end
 end
 
-# Root 
+# Homepage 
 get '/' do
   erb :index
 end
@@ -143,38 +194,7 @@ post '/' do
   # The ssl verification handles https connections
   document = Nokogiri::HTML(open(@webpage, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
 
-  # Use Builder to construct a new html document based 
-  # on the nokogiri 
-  html = Builder::XmlMarkup.new(:indent => 2)
+  generate_page @webpage, document
 
-  # Creates a html document that displays x images per row
-  @output = html.html{
-    html.head{
-      html.title "ImageScraper"
-    }
-    html.body{
-      html.a( {:href => @webpage}, "Images scrapped from #{@webpage}")
-      html.br
-      
-      PER_ROW = 5
-      query = document.css('img')
-
-      0.upto(query.size - 1) do |i|
-        result = query[i]
-
-        if(modify_src?(result))
-          result = modify_src(result, @webpage)
-          html.img :src => result
-        else
-          html.text result
-        end
-
-        if(i % PER_ROW == 0 and i != 0)
-          html.br
-        end
-      end
-    }
-  }
-
-  erb :test
+  erb :images
 end
