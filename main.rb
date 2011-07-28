@@ -198,3 +198,12 @@ post '/' do
 
   erb :images
 end
+
+set :foo , 1
+
+# Settings Test
+get '/settings' do
+  # Settings don't require accessor methods in order to alter
+  settings.foo = 2
+  erb :junk
+end
