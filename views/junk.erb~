@@ -1,2 +1,0 @@
-This means that @page was not nil <br />
-<%= get_page %>

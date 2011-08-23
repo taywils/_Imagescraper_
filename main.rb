@@ -4,8 +4,6 @@ require 'nokogiri'
 require 'openssl'
 require 'builder'
 
-# TODO: Alternatively I could just try and store the output as a settting
-# http://www.sinatrarb.com/configuration.html
 # TODO: Go with the array approach where each output is stored within an outputs array
 # TODO: Within the images.erb just iterate over the outputs and display each one (in reverse order so the most recent
 # images are displayed first)
@@ -197,13 +195,4 @@ post '/' do
   generate_page @webpage, document
 
   erb :images
-end
-
-set :foo , 1
-
-# Settings Test
-get '/settings' do
-  # Settings don't require accessor methods in order to alter
-  settings.foo = 2
-  erb :junk
 end
