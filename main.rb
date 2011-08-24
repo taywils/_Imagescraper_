@@ -4,10 +4,7 @@ require 'nokogiri'
 require 'openssl'
 require 'builder'
 
-# TODO: Go with the array approach where each output is stored within an outputs array
-# TODO: Within the images.erb just iterate over the outputs and display each one (in reverse order so the most recent
-# images are displayed first)
-
+# Use session cookies within Sinatra 
 helpers do 
   # Monkey patch to ensure that Builder will not auto escape xml text
   module Builder  

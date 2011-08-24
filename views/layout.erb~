@@ -4,7 +4,8 @@
   </head>
   <body>
     <form action="/" method="POST">
-      <input type="text" name="scrape_url"/><input type="submit" value="Scrape!"/>
+      Enter a website url:<input type="text" size="34" name="scrape_url"/>
+      <input type="submit" value="Grab Images!"/>
     </form>
     <%= yield %>
   </body>
