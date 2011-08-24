@@ -1,8 +1,12 @@
+# TODO Find out a way to save images from a <img></img> tag to your hardisk
+# TODO Let the user upload a text file of urls to scrape
 require 'sinatra'
 require 'open-uri'
 require 'nokogiri'
 require 'openssl'
 require 'builder'
+
+enable :sessions
 
 # Use session cookies within Sinatra 
 helpers do 
@@ -14,14 +18,6 @@ helpers do
       end  
     end  
   end   
-  
-  def set_page(html_document)
-    @page = html_document
-  end
-
-  def get_page()
-    return @page
-  end
 
   # Extracts the src attribute from an img tag
   def get_src(input)
@@ -173,23 +169,18 @@ helpers do
         end
       }
     }
-
-    set_page output
+    return output
   end
 end
 
 # Homepage 
 get '/' do
+  session['pages'] ||= []    
   erb :index
 end
 
 post '/' do 
   @webpage = params[:scrape_url]
-
-  # The ssl verification handles https connections
-  document = Nokogiri::HTML(open(@webpage, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
-
-  generate_page @webpage, document
-
-  erb :images
+  session['pages'].insert(0, @webpage)
+  erb :index
 end
