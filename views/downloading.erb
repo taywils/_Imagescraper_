@@ -1,0 +1,10 @@
+<% 
+unless session['pages'].empty? 
+  webpages = session['pages'] 
+  download_images(webpages) 
+end 
+%>
+Images will be downloaded to folders within<br />
+<%= Dir.pwd %>
+<br />
+<a href="/">Go scrape some more pages</a>

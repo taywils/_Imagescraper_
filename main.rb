@@ -1,11 +1,16 @@
-# TODO Find out a way to save images from a <img></img> tag to your hardisk
-# TODO Let the user upload a text file of urls to scrape
+# TODO Safely rescue the SocketError from PING? helper
+# TODO Fix the url checker hack so it doesn't insert a http were it should be https
+# TODO Figure how to let the user download to a file on their HD
+# because the current method will DL to the server itself
+# TODO Validation of every input field and data
 require 'sinatra'
 require 'open-uri'
+require 'net/http'
 require 'nokogiri'
 require 'openssl'
 require 'builder'
 
+# Allow us to store session data locally via cookies 
 enable :sessions
 
 # Use session cookies within Sinatra 
@@ -18,7 +23,16 @@ helpers do
       end  
     end  
   end   
-
+  
+  # Checks if a url exists
+  # @see http://snippets.dzone.com/posts/show/10225
+  def ping?(url)
+    url = URI.parse(url)
+    Net::HTTP.start(url.host, url.port) do |http|
+      return http.head(url.request_uri).code == "200"
+    end
+  end
+  
   # Extracts the src attribute from an img tag
   def get_src(input)
     img_tag = input.to_s
@@ -135,6 +149,38 @@ helpers do
       return trimmed_domain += src
     end
   end  
+  
+  def download_images(webpages)
+    # Create the folder to hold the images and give it a unique timestamp
+    current_time = Time.now.to_s.gsub(/:/, '_').gsub(/-/, '_')
+    Dir.mkdir(current_time)
+    Dir.chdir("./#{current_time.to_s}")
+
+    # For each webpage, extract the img sources and save their contents to the HD
+    webpages.each do |webpage|
+      document = Nokogiri::HTML(open(webpage, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
+      query = document.css('img')
+      
+      0.upto(query.size - 1) do |i|
+        img_src_tag = query[i]
+        img_src = get_src(img_src_tag) if get_src(img_src_tag) != nil
+	# Hack to check if the image url is a valid http or http(s) protocol
+	# This assumes that the url will not be https:
+	if(img_src.to_s[0] != 'h')
+		valid_src = insert_http(img_src.to_s)
+	else
+		valid_src = img_src.to_s
+	end
+        file_name = Time.now.nsec.to_s + '.png'
+        open(file_name, 'wb') do |file|
+          file << open(valid_src).read 
+        end
+      end
+    end
+    
+    # Return to the directory where this script is stored
+    Dir.chdir("..")   
+  end
 
   def generate_page(webpage, document)
     # Use Builder to construct a new html document based 
@@ -143,7 +189,7 @@ helpers do
 
     # Creates a html document that displays the desired number of images_per_row
     output = html.html{
-      html.head{
+       html.head{
         html.title "ImageScraper"
       }
       html.body{
@@ -183,4 +229,21 @@ post '/' do
   @webpage = params[:scrape_url]
   session['pages'].insert(0, @webpage)
   erb :index
+end
+
+# Download page
+get '/download' do
+  session['pages'] ||= []
+  erb :downloading  
+end
+
+# Upload text file that will hold urls
+get '/upload' do
+  session['content'] ||= ""
+  erb :upload 
+end
+
+post '/upload' do
+  session['content'] = params[:upload_file][:tempfile].readlines
+  erb :upload
 end
