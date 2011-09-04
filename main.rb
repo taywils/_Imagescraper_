@@ -1,8 +1,3 @@
-# TODO Safely rescue the SocketError from PING? helper
-# TODO Fix the url checker hack so it doesn't insert a http were it should be https
-# TODO Figure how to let the user download to a file on their HD
-# because the current method will DL to the server itself
-# TODO Validation of every input field and data
 require 'sinatra'
 require 'open-uri'
 require 'net/http'
@@ -13,7 +8,6 @@ require 'builder'
 # Allow us to store session data locally via cookies 
 enable :sessions
 
-# Use session cookies within Sinatra 
 helpers do 
   # Monkey patch to ensure that Builder will not auto escape xml text
   module Builder  
@@ -34,6 +28,7 @@ helpers do
   end
   
   # Extracts the src attribute from an img tag
+  # Just grabs all the text from between the src="gets_this_text" quotes
   def get_src(input)
     img_tag = input.to_s
     start_src = img_tag.index('src="') + 5
@@ -232,12 +227,14 @@ post '/' do
 end
 
 # Download page
+# This feature is incomplete
 get '/download' do
   session['pages'] ||= []
   erb :downloading  
 end
 
 # Upload text file that will hold urls
+# This feature is incomplete 
 get '/upload' do
   session['content'] ||= ""
   erb :upload 
