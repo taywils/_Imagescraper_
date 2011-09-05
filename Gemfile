@@ -1,0 +1,7 @@
+source 'http://rubygems.org'
+gem 'sinatra'
+gem 'open-uri'
+gem 'net/http'
+gem 'nokogiri'
+gem 'openssl'
+gem 'builder'
