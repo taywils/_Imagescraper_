@@ -1,17 +1,29 @@
 <html>
-  <head>
-    <title>ImageScrape Beta</title>
-  </head>
-  <body>
-		<h1>Testing 1 2 3 Testing....</h1>
-    <form action="/" method="POST">
-      Enter a website url:<input type="text" size="34" name="scrape_url"/>
-      <input type="submit" value="Show Images!"/>
-   	<%# Uncomment to show the download button %>	 
-	<%# unless session['pages'].empty? %> 
-	<!-- <input type="button" value="Download Images!" onclick="javascript:location.href = '/download';"> -->
-	<%# end %>
-      </form>
-    <%= yield %>
-  </body>
+    <head>
+        <title>_ImageScraper_ver2</title>
+
+        <script type="text/javascript" src="/javascript/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/javascript/main.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.poshytip.min.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.masonry.min.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.imagesloaded.min.js"></script>
+        <script type="text/javascript" src="/javascript/bootstrap.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="/css/tip-yellow.css">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    </head>
+    <body>
+        <div id="mainInputs" align="center">
+            <form id="mainForm">
+                <input id="urlInput" type="text"  placeholder="Copy and paste url here to begin" class="twitterStyleTextbox"
+                       title="Thanks for using ImageScrape version 2"/>
+                <button id="fetchButton" class="thoughtbot" title="Click to display images">Pull Images</button>
+            </form>
+        </div>
+        <%=yield%>
+        <!-- Container for Masonry items -->
+        <div id="container"></div>
+    </body>
 </html>

@@ -1,0 +1,102 @@
+/*
+   @see http://www.c-sharpcorner.com/blogs/9185/twitter-styleglow-textbox-using-css3-new-features-box-shad.aspx
+*/
+input.twitterStyleTextbox {
+    border: 1px solid #c4c4c4;
+    width: 600px;
+    height: 60px;
+    font-size: 22px;
+    padding: 4px 4px 4px 4px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 0px 0px 8px #d9d9d9;
+    -moz-box-shadow: 0px 0px 8px #d9d9d9;
+    -webkit-box-shadow: 0px 0px 8px #d9d9d9;
+}
+input.twitterStyleTextbox:focus {
+    outline: none;
+    border: 1px solid #7d0000;
+    box-shadow: 0px 0px 8px #7d0000;
+    -moz-box-shadow: 0px 0px 8px #7d0000;
+    -webkit-box-shadow: 0px 0px 8px #7d0000;
+}
+
+/*
+    @see http://hellohappy.org/css3-buttons/
+*/
+button.thoughtbot {
+    background-color: #EE432E;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EE432E), color-stop(50%, #C63929), color-stop(50%, #B51700), color-stop(100%, #891100));
+    background-image: -webkit-linear-gradient(top, #EE432E 0%, #C63929 50%, #B51700 50%, #891100 100%);
+    background-image: -moz-linear-gradient(top, #EE432E 0%, #C63929 50%, #B51700 50%, #891100 100%);
+    background-image: -ms-linear-gradient(top, #EE432E 0%, #C63929 50%, #B51700 50%, #891100 100%);
+    background-image: -o-linear-gradient(top, #EE432E 0%, #C63929 50%, #B51700 50%, #891100 100%);
+    background-image: linear-gradient(top, #EE432E 0%, #C63929 50%, #B51700 50%, #891100 100%);
+    border: 1px solid #951100;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4), 0 1px 3px #333;
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4), 0 1px 3px #333333;
+    box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4), 0 1px 3px #333;
+    color: white;
+    font: bold 20px "helvetica neue", helvetica, arial, sans-serif;
+    line-height: 1;
+    padding: 12px 0 14px 0;
+    text-align: center;
+    text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.8);
+    width: 150px;
+}
+button.thoughtbot:hover {
+    background-color: #F37873;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F37873), color-stop(50%, #DB504D), color-stop(50%, #CB0500), color-stop(100%, #A20601));
+    background-image: -webkit-linear-gradient(top, #F37873 0%, #DB504D 50%, #CB0500 50%, #A20601 100%);
+    background-image: -moz-linear-gradient(top, #F37873 0%, #DB504D 50%, #CB0500 50%, #A20601 100%);
+    background-image: -ms-linear-gradient(top, #F37873 0%, #DB504D 50%, #CB0500 50%, #A20601 100%);
+    background-image: -o-linear-gradient(top, #F37873 0%, #DB504D 50%, #CB0500 50%, #A20601 100%);
+    background-image: linear-gradient(top, #F37873 0%, #DB504D 50%, #CB0500 50%, #A20601 100%);
+    cursor: pointer;
+}
+button.thoughtbot:active {
+    background-color: #D43C28;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #D43C28), color-stop(50%, #AD3224), color-stop(50%, #9C1500), color-stop(100%, #700D00));
+    background-image: -webkit-linear-gradient(top, #D43C28 0%, #AD3224 50%, #9C1500 50%, #700D00 100%);
+    background-image: -moz-linear-gradient(top, #D43C28 0%, #AD3224 50%, #9C1500 50%, #700D00 100%);
+    background-image: -ms-linear-gradient(top, #D43C28 0%, #AD3224 50%, #9C1500 50%, #700D00 100%);
+    background-image: -o-linear-gradient(top, #D43C28 0%, #AD3224 50%, #9C1500 50%, #700D00 100%);
+    background-image: linear-gradient(top, #D43C28 0%, #AD3224 50%, #9C1500 50%, #700D00 100%);
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4);
+    box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4);
+}
+
+/* For Masonry.js */
+.item {
+    width: 150px;
+    margin: 10px;
+    float: left;
+}
+#container {
+    width: 1200px;
+    margin: 0 auto;
+}
+.item img {
+    /* This centers the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* This adds the border */
+    padding:8px;
+    border:solid;
+    border-color: #dddddd #aaaaaa #aaaaaa #dddddd;
+    border-width: 1px 2px 2px 1px;
+    background-color:white;
+}
+
+/* General HTML */
+body {
+    background-color: #F0F0F0;
+}
+

@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     builder (3.1.4)
+    json (1.7.6)
     nokogiri (1.5.6)
     nokogiri (1.5.6-x86-mingw32)
     rack (1.5.2)
@@ -19,5 +20,6 @@ PLATFORMS
 
 DEPENDENCIES
   builder
+  json
   nokogiri
   sinatra
