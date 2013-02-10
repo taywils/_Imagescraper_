@@ -1,9 +1,0 @@
-<% unless session['pages'].empty? %>
-  <% pages = session['pages'] %>
-  <% for page in pages %>
-    <% document = Nokogiri::HTML(open(page, :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE)) %>
-    <%= generate_page(page, document) %>
-  <% end %>
-<% else %>
-  No images have been scraped yet
-<% end %>
