@@ -1,23 +1,13 @@
 <html>
     <head>
         <title>_ImageScraper_ver2</title>
-
-        <script type="text/javascript" src="/javascript/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="/javascript/main.js"></script>
-        <script type="text/javascript" src="/javascript/jquery.poshytip.min.js"></script>
-        <script type="text/javascript" src="/javascript/jquery.masonry.min.js"></script>
-        <script type="text/javascript" src="/javascript/jquery.imagesloaded.min.js"></script>
-        <script type="text/javascript" src="/javascript/bootstrap.min.js"></script>
-
-
         <link rel="stylesheet" type="text/css" href="/css/tip-yellow.css">
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="/css/styles.css">
     </head>
     <body>
         <div id="mainInputs" align="center">
             <form id="mainForm">
-                <input id="urlInput" type="text"  placeholder="Copy and paste url here to begin" class="twitterStyleTextbox"
+                <input id="urlInput" type="text" placeholder="Copy and paste url here to begin" class="twitterStyleTextbox"
                        title="Thanks for using ImageScrape version 2"/>
                 <button id="fetchButton" class="thoughtbot" title="Click to display images">Pull Images</button>
             </form>
@@ -25,5 +15,13 @@
         <%=yield%>
         <!-- Container for Masonry items -->
         <div id="container"></div>
+        <div id="spinnerDiv"></div>
+
+        <script type="text/javascript" src="/javascript/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/javascript/main.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.poshytip.min.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.masonry.min.js"></script>
+        <script type="text/javascript" src="/javascript/jquery.imagesloaded.min.js"></script>
+        <script type="text/javascript" src="/javascript/spin.min.js"></script>
     </body>
 </html>
