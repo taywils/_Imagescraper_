@@ -21,6 +21,7 @@ class Scrape
 
 private
 
+  # Utility method for fix_url
   def self.ping?(url)
     uri = URI(url)
     begin
@@ -31,6 +32,7 @@ private
     end
   end
 
+  # Utility method for fix_url
   def self.try_url(url, option)
     case option
       when 1
@@ -46,6 +48,7 @@ private
     end
   end
 
+  # Tries different urls given an initial guess
   def self.fix_url(url)
     0.upto(4) do |n|
       if self.ping?(self.try_url(url, n))

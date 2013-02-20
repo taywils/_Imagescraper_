@@ -73,19 +73,15 @@ button.thoughtbot:active {
 
 /* For Masonry.js */
 .item {
-    width: 150px;
-    margin: 10px;
-    float: left;
+    width: auto;
 }
 #container {
-    width: 1200px;
-    margin: 0 auto;
+    width: 60%;
+    margin: auto;
 }
 .item img {
     /* This centers the image */
     display: block;
-    margin-left: auto;
-    margin-right: auto;
 
     /* This adds the border */
     padding:8px;

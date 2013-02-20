@@ -1,12 +1,17 @@
 $(document).ready( function() {
 
+    // Variables
     var $container = $('#container');
+    var $urlInput = $('#urlInput');
 
+    // jquery.masonry stuff
     var addImgToMasonry = function($imgItem, callback) {
-        $container.append($imgItem).masonry('appended', $imgItem);
+        //$container.append($imgItem).masonry('appended', $imgItem);
+        $container.prepend($imgItem).masonry('reload');
         callback();
     };
 
+    // spin.js stuff
     var spinnerOptions = {
         lines: 13, // The number of lines to draw
         length: 7, // The length of each line
@@ -27,7 +32,8 @@ $(document).ready( function() {
     var spinnerTarget = document.getElementById('spinnerDiv');
     var spinner = new Spinner(spinnerOptions);
 
-	$('#urlInput').poshytip({
+    // Poshytip stuff
+	$urlInput.poshytip({
 		content: 'Invalid Url please try again!',
         showOn: 'none',
         className: 'tip-yellow',
@@ -37,9 +43,10 @@ $(document).ready( function() {
         offsetX: 5
 	});
 
+    // Jquery Events
 	$('#mainForm').submit(function(event) {
 		event.preventDefault();
-		var inputUrl = $('#urlInput').val();
+		var inputUrl = $urlInput.val();
         spinner.spin(spinnerTarget);
 
 		$.post('/validate', {
@@ -49,24 +56,18 @@ $(document).ready( function() {
             spinner.stop();
 
 			if(dataParsed.error !== undefined) { //Handle error
-                console.log("code: " + dataParsed.code); // Debug
-
-				$('#urlInput').poshytip('show');
+				$urlInput.poshytip('show');
 
 				setTimeout(
 					function() {
-						$('#urlInput').poshytip('update', "Please use the full http:// url");
+						$urlInput.poshytip('update', "Please use the full http:// url");
 					}, 2000
 				);
 			} else { //Display Images
-				$('#urlInput').poshytip('hide');
-				$('#urlInput').poshytip('update', "Invalid Url please try again!");
-
-                console.log("Images pulled from " + inputUrl);
+				$urlInput.poshytip('hide');
+				$urlInput.poshytip('update', "Invalid Url please try again!");
 
 				for(var index in dataParsed) {
-					console.log(index + " => " + dataParsed[index]);
-
 					var $newItem = $("<div class='item'>" + dataParsed[index] + "</div>");
 
                     addImgToMasonry($newItem, function() {
@@ -79,8 +80,8 @@ $(document).ready( function() {
                                 queue: false
                             }
                         }).imagesLoaded(function() {
-                               $container.masonry('reload');
-                            });
+                            $container.masonry('reload');
+                        });
                     });
 				}
 			}
