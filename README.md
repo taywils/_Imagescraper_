@@ -6,6 +6,11 @@ Imagescraper is a small tool written in Ruby using Sinatra that will display all
 
 Go to http://imagescraper.heroku.com/ and paste in a url and then click "pull images"
 
+## TODO
+
+- I need to merge some of the more robust imagescraping from version_one 
+- Mobile?
+
 ## License
 
 MIT License
